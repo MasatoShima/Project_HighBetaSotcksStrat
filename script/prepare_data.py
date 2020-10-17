@@ -48,6 +48,22 @@ df_announcement = pd.read_csv(
 	encoding="utf-8"
 )
 
+df_beta_topix = pd.read_csv(
+	f"{DIR_DATA}beta_topix.tsv",
+	sep="\t",
+	header=0,
+	index_col=0,
+	encoding="utf-8"
+)
+
+df_beta_nk225 = pd.read_csv(
+	f"{DIR_DATA}beta_nk225.tsv",
+	sep="\t",
+	header=0,
+	index_col=0,
+	encoding="utf-8"
+)
+
 
 # %%
 # # **************************************************
