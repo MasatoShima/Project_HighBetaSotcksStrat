@@ -131,6 +131,7 @@ for _, row in df_earnings_season_start_weeks.iterrows():
 
 	while True:
 		try:
+			stocks: pd.Series
 			stocks = df_beta_topix.loc[date]
 			break
 		except KeyError:
@@ -138,6 +139,10 @@ for _, row in df_earnings_season_start_weeks.iterrows():
 			date = date + datetime.timedelta(days=i)
 			date = datetime.datetime.strftime(date, "%Y/%m/%d")
 			i += 1
+
+	stocks.dropna(inplace=True)
+	stocks.sort_values(ascending=False, inplace=True)
+	stocks = stocks[:30].index.tolist()
 
 
 # %%
