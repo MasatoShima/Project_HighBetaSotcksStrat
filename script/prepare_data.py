@@ -33,7 +33,8 @@ df_price = pd.read_csv(
 	sep="\t",
 	header=0,
 	index_col=0,
-	encoding="utf-8"
+	encoding="utf-8",
+	parse_dates=True
 )
 
 df_volume = pd.read_csv(
@@ -41,7 +42,8 @@ df_volume = pd.read_csv(
 	sep="\t",
 	header=0,
 	index_col=0,
-	encoding="utf-8"
+	encoding="utf-8",
+	parse_dates=True
 )
 
 df_announcement = pd.read_csv(
@@ -57,7 +59,8 @@ df_beta_topix = pd.read_csv(
 	sep="\t",
 	header=0,
 	index_col=0,
-	encoding="utf-8"
+	encoding="utf-8",
+	parse_dates=True
 )
 
 df_beta_nk225 = pd.read_csv(
@@ -65,8 +68,18 @@ df_beta_nk225 = pd.read_csv(
 	sep="\t",
 	header=0,
 	index_col=0,
-	encoding="utf-8"
+	encoding="utf-8",
+	parse_dates=True
 )
+
+
+# %%
+# **************************************************
+# ----- Resample to weekly price data
+# **************************************************
+df_price_weekly = df_price.groupby(pd.Grouper(level=0, freq="W"))
+df_price_weekly_first = df_price_weekly.first()
+df_price_weekly_last = df_price_weekly.last()
 
 
 # %%
@@ -143,6 +156,9 @@ for _, row in df_earnings_season_start_weeks.iterrows():
 	stocks.dropna(inplace=True)
 	stocks.sort_values(ascending=False, inplace=True)
 	stocks = stocks[:30].index.tolist()
+
+	price_first = df_price_weekly_first.loc[row["date"], stocks]
+	price_last = df_price_weekly_last.loc[row["date"], stocks]
 
 
 # %%
