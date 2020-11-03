@@ -159,6 +159,7 @@ for _, row in df_earnings_season_start_weeks.iterrows():
 
 	price_first = df_price_weekly_first.loc[row["date"], stocks]
 	price_last = df_price_weekly_last.loc[row["date"], stocks]
+	price_return = price_last.sum() - price_first.sum()
 
 
 # %%
